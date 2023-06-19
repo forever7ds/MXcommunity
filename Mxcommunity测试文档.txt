@@ -1,0 +1,22 @@
+效果
+caffeine: 655us到4.5us, 百倍速率提升
+redis: 测试user_id-name_of_user, 如果redis存储user对象, 则大约是1200us到500us, String也类似(序列化不占用太多时间)
+redis: 高并发测试, db700us到redis200us
+
+
+
+Todo
+如何测试kafka的异步produce与consume行为?
+redis持久化
+redis并发测试?
+...
+
+Done
+Login模块所有测试
+PostShow模块GetPosts测试
+PostShow模块更新状态(Kafka待测试)
+redis单独读取测试
+
+
+question:
+用户页面内如何接收通知?定时刷新?

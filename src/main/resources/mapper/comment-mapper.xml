@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mxcommunity.dao.CommentMapper">
+    <sql id="insertField">
+        creator_id, target_id, content, entity_type, entity_id, like_count, create_time, status
+    </sql>
+
+    <sql id="selectField">
+        id, creator_id, target_id, content, entity_type, entity_id, like_count, create_time, status
+    </sql>
+
+    <insert id="insertComment" parameterType="Comment" keyProperty="id">
+        insert into comment(<include refid="insertField"></include>) values(#{creatorId},#{targetId},#{content},#{entityType},
+        #{entityId},#{likeCount},#{createTime},#{status})
+    </insert>
+
+    <select id="selectCommentsByEntityId" resultType="Comment">
+        select <include refid="selectField"></include> from comment where entity_id=#{entityId} and entity_type=#{entityType}
+    </select>
+
+    <select id="selectPagingCommentsByEntityId" resultType="Comment">
+        select <include refid="selectField"></include> from comment where entity_id=#{entityId} and entity_type=#{entityType}
+        limit #{start},#{offset}
+    </select>
+
+    <select id="selectCommentById" resultType="Comment">
+        select <include refid="selectField"></include> from comment where id=#{id}
+    </select>
+
+    <update id="updateStatusById" keyProperty="id">
+        update comment set status=#{commentStatus} where id=#{id}
+    </update>
+
+    <select id="selectAllComments" resultType="Comment">
+        select * from comment
+    </select>
+
+</mapper>

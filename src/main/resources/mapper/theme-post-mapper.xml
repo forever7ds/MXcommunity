@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mxcommunity.dao.ThemePostMapper">
+    <sql id="insertField">
+        creator_id, title, content, tag, type, create_time, modified_time, comment_count, view_count, like_count, favourite_count, heat_score
+    </sql>
+
+    <sql id="selectField">
+        id, creator_id, title, content, tag, type, create_time, modified_time, comment_count, view_count, like_count, favourite_count, heat_score
+    </sql>
+
+    <update id="updateTypeById" keyProperty="id">
+        update theme_post set type=#{type} where id=#{id}
+    </update>
+
+    <update id="updateViewCountById" keyProperty="id">
+        update theme_post set view_count=#{viewCount} where id=#{id}
+    </update>
+
+    <update id="updateLikeCountById" keyProperty="id">
+        update theme_post set like_count=#{likeCount} where id=#{id}
+    </update>
+
+    <update id="updateFavouriteCountById" keyProperty="id">
+        update theme_post set favourite_count=#{favouriteCount} where id=#{id}
+    </update>
+
+    <update id="updateCommentCountById" keyProperty="id">
+        update theme_post set comment_count=#{commentCount} where id=#{id}
+    </update>
+
+    <update id="updateScoreById" keyProperty="id">
+        update theme_post set heat_score=#{score} where id=#{id}
+    </update>
+
+    <update id="updateModifiedTimeById" keyProperty="id">
+        update theme_post set modified_time=#{modifiedTime} where id=#{id}
+    </update>
+
+    <insert id="insertThemePost" parameterType="ThemePost" keyProperty="id">
+        insert into theme_post(<include refid="insertField"></include>) values(#{creatorId},#{title},#{content},#{tag},
+                                        #{type},#{createTime},#{modifiedTime},#{commentCount},#{viewCount},#{likeCount},
+                                        #{favouriteCount},#{heatScore})
+    </insert>
+
+    <select id="selectThemePostById" resultType="ThemePost">
+        select <include refid="selectField"></include> from theme_post where id=#{id}
+    </select>
+
+    <select id="selectThemePostsPagingByLatest" resultType="ThemePost">
+        select <include refid="selectField"></include> from theme_post order by modified_time desc limit #{start},#{offset}
+    </select>
+
+    <select id="selectThemePostsPagingByOldest" resultType="ThemePost">
+        select <include refid="selectField"></include> from theme_post order by modified_time limit #{start},#{offset}
+    </select>
+
+    <select id="selectThemePostsPagingByTypeLatest" resultType="ThemePost">
+        select <include refid="selectField"></include> from theme_post where type=#{type} order by modified_time desc limit #{start},#{offset}
+    </select>
+
+    <select id="selectThemePostsPagingByTypeOldest" resultType="ThemePost">
+        select <include refid="selectField"></include> from theme_post where type=#{type} order by modified_time limit #{start},#{offset}
+    </select>
+
+    <select id="selectPostCount" resultType="long">
+        select count(type) from theme_post where type!=1
+    </select>
+
+    <select id="selectAllThemePosts" resultType="ThemePost">
+        select * from theme_post
+    </select>
+
+
+</mapper>
